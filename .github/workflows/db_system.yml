@@ -4,6 +4,7 @@ name: simple Db to Db etl
 on:
   schedule:
     - cron: "0 5 */2 * *"
+  workflow_dispatch:  
 
 jobs:
   deploy-prefect:
