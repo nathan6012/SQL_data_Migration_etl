@@ -1,5 +1,8 @@
 name: simple Db to Db etl 
 on:
+  push:
+    branches:
+      - main 
   schedule:
     - cron: "0 5 */2 * *"
   workflow_dispatch:  
@@ -22,15 +25,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: "3.12"
-          cache: pip 
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install  install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Run ETL
         run: python src/main_app.py
         
