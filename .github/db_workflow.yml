@@ -1,0 +1,53 @@
+name: simple Db to Db etl 
+
+on:
+  schedule:
+    - cron: "0 5 */2 * *"
+
+jobs:
+  deploy-prefect:
+    runs-on: ubuntu-latest
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
+      
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip 
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pip install -r requirements.txt
+      - name: Run ETL
+        run: python src/main_app.py
+        
+      
+      - name: Slack Notification Success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Database workflow completed successfully Ok !"
+
+      # ⃣ Slack notification on failure
+      - name: Slack Notification Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Database Worflow Completed with failures "
+  
+
+

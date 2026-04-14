@@ -1,0 +1,47 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+
+from pydantic import BaseModel,ValidationError
+import json 
+from models import OrdersData
+from datetime import datetime
+
+
+
+
+
+
+
+
+
+
+def validate_orders_data(data3,Model):
+  """ Validates customer Data """
+  valid = []
+  invalid = [] 
+  
+  for idx,records in enumerate(data3):
+    try:
+      clean = Model(**records)
+      valid.append({ 
+        "idx":idx,
+        "data":clean.model_dump(mode="json")
+      })
+    except ValidationError as error:
+      invalid.append({
+        "idx":idx,
+        "errors":error.errors()
+      })
+      
+  return valid,invalid 
+  
+  
+def main ():
+  validate_orders_data()
+  
+if __name__=="__main__":
+  main()
