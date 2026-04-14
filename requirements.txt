@@ -3,6 +3,7 @@ pydantic
 sqlalchemy
 pathlib 
 pytest
+email-validator
 pytest-asyncio
 python-dotenv
 prefect
