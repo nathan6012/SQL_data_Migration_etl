@@ -7,8 +7,9 @@ on:
 jobs:
   deploy-prefect:
     runs-on: ubuntu-latest
-
-    env:
+    
+    environment: Env
+    env: 
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
