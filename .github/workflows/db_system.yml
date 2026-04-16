@@ -19,6 +19,9 @@ jobs:
       
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       
+      PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
+      
+      PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
 
     steps:
       - name: Checkout repository
@@ -35,7 +38,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install 'pydantic[email]'
-
+          
+      - name: Run tests
+        run: |
+          pytest -v 
+          
       - name: Run ETL
         run: python src/main_app.py
         
@@ -53,6 +60,6 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "Database Worflow Completed with failures "
+          SLACK_MESSAGE: "Database Worflow Completed with Failures "
   
 
