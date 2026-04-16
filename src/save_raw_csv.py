@@ -23,19 +23,19 @@ def save_raw_csv(a,b,c):
   #file2 = sub_folder/"products.csv"
   #file3 = sub_folder/"orders.csv"
   
-  ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
   file_data_1 = f"customers_{ts}.csv"
   
   file1 = sub_folder/ file_data_1
   
   
-  ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
   file_data_2 = f"products_{ts}.csv"
   
   file2 = sub_folder/file_data_2
   
   
-  ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
   file_data_3 = f"orders_{ts}.csv "
   
   file3 = sub_folder/file_data_3
