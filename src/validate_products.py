@@ -36,8 +36,3 @@ def validate_products_data(data2,Model):
       
   return valid,invalid   
  
-def main ():
-  validate_products_data()
-  
-if __name__=="__main__":
-  main() 

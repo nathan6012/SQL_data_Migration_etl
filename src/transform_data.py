@@ -141,10 +141,3 @@ def transform_data(c,c1,p,p1,o,o1):
   return customers,products,orders 
   
   
-  
-def main():
-  tranform_data()
-  
-if __name__=="__main__":
-  main()
-  

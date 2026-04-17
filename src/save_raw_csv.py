@@ -53,9 +53,3 @@ def save_raw_csv(a,b,c):
   df3.to_csv(file3,index=False)
   
   
-  
-def main():
-  save_raw_csv()
-  
-if __name__== "__main__":
-  main()

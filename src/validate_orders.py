@@ -40,8 +40,3 @@ def validate_orders_data(data3,Model):
   return valid,invalid 
   
   
-def main ():
-  validate_orders_data()
-  
-if __name__=="__main__":
-  main()

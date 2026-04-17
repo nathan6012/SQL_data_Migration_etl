@@ -34,12 +34,7 @@ def validate_customers_data(data,Model):
       
   return valid,invalid   
       
-def main ():
-  validate_customers_data()
-  
-if __name__=="__main__":
-  main() 
- 
+
   
 
 
