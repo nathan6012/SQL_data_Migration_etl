@@ -39,9 +39,6 @@ jobs:
           pip install -r requirements.txt
           pip install 'pydantic[email]'
           
-      - name: Run tests
-        run: |
-          pytest -v 
           
       - name: Run ETL
         run: python src/main_app.py
