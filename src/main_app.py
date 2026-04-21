@@ -94,7 +94,7 @@ async def main():
   saw_raw_csv_files_task(cc,pp,oo)
   
   logging.info("\ncsv files saved for backfill")
-  await asyncio.sleep(0.5)
+  #await asyncio.sleep(0.5)
   
   logging.info("\nData validation started")
   
@@ -109,19 +109,19 @@ async def main():
   
   
   logging.info("\nData Passed Validation")
-  await asyncio.sleep(0.1)
+ # await asyncio.sleep(0.1)
   logging.info("\nTransfromation started")
   
   cus,pro,ords = transform_data_task(c,c1,p,p1,o,o1)
   
  
-  await asyncio.sleep(0.5)
+ # await asyncio.sleep(0.5)
   logging.info("\nData ready for Database load")
   
   await load_to_postgres_task(cus,pro,ords)
   
   logging.info("\npipeline Completed")
-  await asyncio.sleep(0.1)
+ # await asyncio.sleep(0.1)
   
 if __name__=="__main__":
   asyncio.run(main())

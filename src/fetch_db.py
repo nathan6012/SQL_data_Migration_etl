@@ -44,6 +44,7 @@ async def get_table(conn: AsyncConnection, table_name: str, metadata: MetaData) 
   """Return a Table object if it exists in the database, else None."""
   
   tables = await conn.run_sync(lambda sync_conn: inspect(sync_conn).get_table_names())
+  
   if table_name in tables:
     return await conn.run_sync(lambda sync_conn:Table(table_name, metadata, autoload_with=sync_conn))
   return None

@@ -2,8 +2,6 @@ import sys
 import os
 import logging 
 
-logging.basicConfig(level=logging.INFO)
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -14,10 +12,11 @@ from sqlalchemy import Text,Float
 from sqlalchemy.dialects.postgresql import insert as upsert 
 from sqlalchemy import UniqueConstraint 
 from sqlalchemy import(Table,Column,Integer,String,MetaData,ForeignKey,Index,Numeric)
-
 from sqlalchemy import DateTime
-
 from dotenv import load_dotenv
+
+
+logging.basicConfig(level=logging.INFO)
 load_dotenv()
 
 
