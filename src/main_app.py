@@ -98,12 +98,11 @@ async def main():
   
   logging.info("\nData validation started")
   
+  #validation 
   c,c1 = Validate_customers_task(cc,CustomerData)
   
-  
   p,p1 = validate_products_task(pp,ProductData)
-
-
+  
   o,o1 = validate_orders_task(oo,OrdersData)
   
   
@@ -122,8 +121,5 @@ async def main():
   
   logging.info("\npipeline Completed")
  # await asyncio.sleep(0.1)
-  
-if __name__=="__main__":
-  asyncio.run(main())
   
   
