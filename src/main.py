@@ -44,13 +44,12 @@ with DAG(
     # ----------------------------
   @task(multiple_outputs=True)
   def extract_task():
-    data = asyncio.run(fetch_from_database())
+    customers, products, orders = asyncio.run(fetch_from_database())
     return {
-            "customers": data["customers"],
-            "products": data["products"],
-            "orders": data["orders"],
-        }
-
+        "customers": customers,
+        "products": products,
+        "orders": orders,
+    }
     # ----------------------------
     # 2. SAVE RAW
     # ----------------------------
