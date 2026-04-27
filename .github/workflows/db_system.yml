@@ -17,6 +17,7 @@ jobs:
       AIRFLOW_HOME: ${{ github.workspace }}/airflow
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      AIRFLOW__CORE__FERNET_KEY: ''
 
     steps:
       - name: Checkout repository
@@ -43,7 +44,8 @@ jobs:
           cp -r src/* $AIRFLOW_HOME/dags/
           
           # Initialize local SQLite for Airflow metadata
-          airflow db init
+          airflow db migrate
+
           
           # Run the specific DAG ID defined in your main.py
           airflow dags test etl_sqlite_pipeline $(date +'%Y-%m-%d')
