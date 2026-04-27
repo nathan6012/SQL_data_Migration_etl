@@ -4,24 +4,19 @@ on:
     branches:
       - main 
   schedule:
-    - cron: "0 5 */2 * *"
+    - cron: "0 5 * * *"
   workflow_dispatch:  
 
 jobs:
-  deploy-prefect:
+  run-airflow-etl:
     runs-on: ubuntu-latest
     
     environment: Env
     env: 
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
-      
+      AIRFLOW_HOME: ${{ github.workspace }}/airflow
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-      
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      
-      PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
-      
-      PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
 
     steps:
       - name: Checkout repository
@@ -37,26 +32,33 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install 'pydantic[email]'
+          pip install 'pydantic[email]' 'apache-airflow==2.10.2' --constraint "https://githubusercontent.com"
           
+      - name: Initialize Airflow & Run DAG
+        run: |
+          # Create Airflow structure
+          mkdir -p $AIRFLOW_HOME/dags
           
-      - name: Run ETL
-        run: python src/main_app.py
+          # Move your script and source files so Airflow can find the DAG and modules
+          cp -r src/* $AIRFLOW_HOME/dags/
+          
+          # Initialize local SQLite for Airflow metadata
+          airflow db init
+          
+          # Run the specific DAG ID defined in your main.py
+          airflow dags test etl_sqlite_pipeline $(date +'%Y-%m-%d')
         
-      
       - name: Slack Notification Success
         if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "Database workflow completed successfully Ok !"
+          SLACK_MESSAGE: "Airflow ETL workflow completed successfully!"
 
-      # ⃣ Slack notification on failure
       - name: Slack Notification Failure
         if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "Database Worflow Completed with Failures "
-  
+          SLACK_MESSAGE: "Airflow ETL Workflow Failed."
 
