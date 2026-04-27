@@ -13,6 +13,6 @@ apache-airflow
 pydantic[email]
 kubernetes
 virtualenv
-
+graphviz
 
 
