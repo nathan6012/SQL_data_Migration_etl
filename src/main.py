@@ -43,7 +43,7 @@ with DAG(
     # ----------------------------
     # EXTRACT (ASYNC SAFE WRAPPER)
     # ----------------------------
-  @task
+  @task(multiple_outputs=True)
   def extract_task():
     return asyncio.run(fetch_from_database())
 
@@ -60,17 +60,17 @@ with DAG(
     # ----------------------------
     # VALIDATION LAYER
     # ----------------------------
-  @task
+  @task(multiple_outputs=True)
   def validate_customers_task(cus):
     return validate_customers_data(cus, CustomerData)
 
 
-  @task
+  @task(multiple_outputs=True)
   def validate_products_task(pro):
     return validate_products_data(pro, ProductData)
 
 
-  @task
+  @task(multiple_outputs=True)
   def validate_orders_task(ords):
     return validate_orders_data(ords, OrdersData)
 
@@ -78,7 +78,7 @@ with DAG(
     # ----------------------------
     # TRANSFORM LAYER
     # ----------------------------
-  @task
+  @task(multiple_outputs=True)
   def transform_task(c, c1, p, p1, o, o1):
     return transform_data(c, c1, p, p1, o, o1)
 
@@ -86,7 +86,7 @@ with DAG(
     # ----------------------------
     # LOAD (ASYNC SAFE WRAPPER)
     # ----------------------------
-  @task
+  @task(multiple_outputs=True)
   def load_task(cus_l, pro_l, ords_l):
     return asyncio.run(load_to_postgres(cus_l, pro_l, ords_l))
 
