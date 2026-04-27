@@ -32,7 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install 'pydantic[email]' 'apache-airflow==2.10.2' --constraint "https://githubusercontent.com"
+
           
       - name: Initialize Airflow & Run DAG
         run: |
