@@ -3,23 +3,16 @@ pydantic[email]
 sqlalchemy>=2.0
 asyncpg>=0.29.0
 psycopg2-binary>=2.9.9
-
-
 dagster
 dagster-webserver
-
 python-dotenv
 pathlib
-
 email-validator
-
 pytest
 pytest-asyncio
 fakeredis==1.7.0
 
-
 kubernetes
 virtualenv
-
 graphviz
 
