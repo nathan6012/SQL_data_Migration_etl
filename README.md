@@ -1,7 +1,7 @@
 # 🚀 Tech Stack
 
 ![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=white)
-![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=apache-airflow&logoColor=white)
+![Dagster](https://img.shields.io/badge/Dagster-5C6AC4?style=for-the-badge)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge)
 ![Pydantic](https://img.shields.io/badge/Pydantic-2D6CDF?style=for-the-badge)
@@ -9,18 +9,19 @@
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 
 
-This project is a production-style ETL pipeline that migrates data from SQLite to PostgreSQL using Apache Airflow orchestration.
+This project is a production-style ETL pipeline that migrates data from SQLite to PostgreSQL using Dagstar orchestration.
 It demonstrates a complete data engineering workflow including:
 🧹 Data extraction from SQLite
 🔄 Transformation & cleaning using Pandas
 ✅ Data validation using Pydantic
 🏗️ Schema modeling with SQLAlchemy
 🚀 Automated loading into PostgreSQL
-📊 Fully orchestrated workflows with Airflow
+📊 Fully orchestrated workflows with Dagstar
 Built to simulate real-world business data migration pipelines used in modern data platforms.
 
 
-🧠 Business Value
+🧠 #Business Value
+
 This pipeline solves key enterprise problems:
 📦 Data Migration → Move legacy SQLite data into scalable PostgreSQL
 🧹 Data Cleaning → Remove inconsistencies before loading
@@ -46,8 +47,8 @@ This pipeline solves key enterprise problems:
 
 Tool
 Purpose
-🌀 Airflow
-Workflow orchestration & scheduling
+Dagstar
+Workflow orchestration 
 🐼 Pandas
 Data transformation & cleaning
 🧩 SQLAlchemy
@@ -104,7 +105,7 @@ pytest tests/
 🔁 Incremental ETL-ready design
 🧠 Strict data validation (Pydantic)
 🏗️ ORM-based schema control (SQLAlchemy)
-⚡ Airflow DAG orchestration
+⚡ DAGSTAR orchestration
 📦 Modular and scalable architecture
 🧪 Test-driven pipeline reliability
 
@@ -112,10 +113,9 @@ pytest tests/
 📈 Future Improvements
 🔄 Add incremental watermarking
 ☁️ Migrate to cloud (GCP BigQuery / AWS RDS)
-🧊 Add Dockerized Airflow setup
-📡 Add monitoring (Airflow + Prometheus)
+📡 Add monitoring (DAGSTAR cloud)
 🧠 Integrate ML-based data anomaly detection
 
 👨‍💻 Author
 Shamola Nassan
-Data Engineering | ETL Systems | Python Automation | Airflow pipelines
+Data Engineering | ETL Systems | Python Automation | DAGSTAR pipelines

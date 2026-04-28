@@ -1,4 +1,5 @@
 name: simple Db to Db etl 
+
 on:
   push:
     branches:
@@ -8,16 +9,13 @@ on:
   workflow_dispatch:  
 
 jobs:
-  run-airflow-etl:
+  run-dagster-etl:
     runs-on: ubuntu-latest
     
     environment: Env
     env: 
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
-      AIRFLOW_HOME: ${{ github.workspace }}/airflow
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      AIRFLOW__CORE__FERNET_KEY: ''
 
     steps:
       - name: Checkout repository
@@ -34,22 +32,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-          
-      - name: Initialize Airflow & Run DAG
+      - name: Run Dagster Assets
         run: |
-          # Create Airflow structure
-          mkdir -p $AIRFLOW_HOME/dags
-          
-          # Move your script and source files so Airflow can find the DAG and modules
-          cp -r src/* $AIRFLOW_HOME/dags/
-          
-          # Initialize local SQLite for Airflow metadata
-          airflow db migrate
+          # Run all assets defined in your Definitions
+          dagster asset materialize \
+            -f src/main.py
 
-          
-          # Run the specific DAG ID defined in your main.py
-          airflow dags test etl_sqlite_pipeline $(date +'%Y-%m-%d')
-        
+
+
       - name: Slack Notification Success
         if: success()
         uses: rtCamp/action-slack-notify@v2
