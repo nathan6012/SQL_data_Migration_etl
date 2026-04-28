@@ -73,7 +73,7 @@ Validate customers, orders, products separately
 Load
 Insert processed data into PostgreSQL using SQLAlchemy
 Orchestrate
-Airflow DAG schedules and manages the entire Pipeline
+Dagstar manages the entire orcastration Pipeline
 
 
 Covers:
