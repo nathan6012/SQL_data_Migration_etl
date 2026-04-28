@@ -11,7 +11,7 @@ email-validator
 pytest
 pytest-asyncio
 fakeredis==1.7.0
-
+aiosqlite
 kubernetes
 virtualenv
 graphviz

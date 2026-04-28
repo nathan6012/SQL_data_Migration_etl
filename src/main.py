@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from dagster import asset, Definitions
-
+#import aiosqlite
 # imports
 from fetch_db import fetch_from_database
 from validate_customers import validate_customers_data
