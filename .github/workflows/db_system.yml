@@ -35,8 +35,9 @@ jobs:
       - name: Run Dagster Assets
         run: |
           # Run all assets defined in your Definitions
-          dg launch --assets "*" -f src/main.py
-
+          dagster asset materialize \
+          -f src/main.py \
+          --select "*"
 
 
       - name: Slack Notification Success
