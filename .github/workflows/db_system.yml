@@ -36,7 +36,8 @@ jobs:
         run: |
           # Run all assets defined in your Definitions
           dagster asset materialize \
-            -f src/main.py
+            -f src/main.py \
+            --select "*"
 
 
 
