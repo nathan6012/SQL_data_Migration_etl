@@ -19,6 +19,8 @@ It demonstrates a complete data engineering workflow including:
 📊 Fully orchestrated workflows with Dagstar
 Built to simulate real-world business data migration pipelines used in modern data platforms.
 
+modeling: Relationship modeling (RBDM)
+
 
 🧠 #Business Value
 
@@ -27,7 +29,7 @@ This pipeline solves key enterprise problems:
 🧹 Data Cleaning → Remove inconsistencies before loading
 🔍 Data Validation → Ensure schema correctness using Pydantic
 ⚙️ Automation → Fully scheduled and repeatable ETL workflows
-📈 Scalability Ready → Designed for production expansion (S3, BigQuery, etc.)
+📈 Scalability Ready → Designed for production expansion (S3, PostgreSQL,MySql)
 
 
 .
