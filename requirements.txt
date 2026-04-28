@@ -5,6 +5,7 @@ asyncpg>=0.29.0
 psycopg2-binary>=2.9.9
 dagster
 dagster-webserver
+dagster[dg]
 python-dotenv
 pathlib
 email-validator
