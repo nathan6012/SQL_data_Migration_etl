@@ -12,17 +12,17 @@ import boto3
 from dotenv import load_dotenv
 from datetime import datetime
 import logging
-from io import StringIO
 
 
 # Logging
 logging.basicConfig(level=logging.INFO)
+
 # Load environment variables
 load_dotenv()
 
 
 def save_raw_csv(customers, products, orders):
-  """Save raw extracted data to S3/R2 as CSV """
+  """Save raw extracted data to S3/R2 as CSV files """
 
   endpoint = os.getenv("endpoint_url")
   access_key_id = os.getenv("access_key_id")
@@ -30,7 +30,6 @@ def save_raw_csv(customers, products, orders):
 
   bucket = "nathan-elt-buck"
 
-    # S3 / R2 client
   s3 = boto3.client(
         "s3",
         endpoint_url=endpoint,
@@ -52,38 +51,27 @@ def save_raw_csv(customers, products, orders):
       continue
 
     try:
-            # Convert to DataFrame
       df = pd.DataFrame(data)
 
-            # Convert DataFrame to CSV string
-      csv_buffer = StringIO()
-      df.to_csv(
-                csv_buffer,
-                index=False
-            )
+            # Convert directly to CSV string (no StringIO)
+      csv_data = df.to_csv(index=False)
 
       now = datetime.utcnow()
 
-            # File path in bucket
       key = (
                 f"sqlite/csv/"
                 f"{now:%Y/%m/%d/%H}/"
                 f"{name}_data.csv"
             )
 
-            # Upload CSV
       s3.put_object(
                 Bucket=bucket,
                 Key=key,
-                Body=csv_buffer.getvalue(),
+                Body=csv_data,
                 ContentType="text/csv"
             )
 
-      logging.info(
-                f"{name} CSV staged to Data Lake"
-            )
+      logging.info(f"{name} CSV staged to Data Lake")
 
     except Exception as e:
-      logging.error(
-                f"Failed to upload {name}: {e}"
-            )
+      logging.error(f"Failed to upload {name}: {e}")
