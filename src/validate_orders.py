@@ -15,10 +15,6 @@ from datetime import datetime
 
 
 
-
-
-
-
 def validate_orders_data(data3,Model):
   """ Validates customer Data """
   valid = []

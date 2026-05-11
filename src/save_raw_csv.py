@@ -1,55 +1,89 @@
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..")
+    )
+)
+
+import pandas as pd
+import boto3
+from dotenv import load_dotenv
+from datetime import datetime
+import logging
+from io import StringIO
 
 
-import pandas as pd 
-import csv 
-from pathlib import Path
-from datetime import datetime 
+# Logging
+logging.basicConfig(level=logging.INFO)
+# Load environment variables
+load_dotenv()
 
 
-def save_raw_csv(a,b,c):
-  
-  """ Data Saved to json back to dict """
-  
-    
-  pwd = Path(__file__).resolve().parent
-  root = pwd.parent
-  sub_folder = root/"data"
+def save_raw_csv(customers, products, orders):
+  """Save raw extracted data to S3/R2 as CSV """
 
-  #file1 = sub_folder/"customers.csv"
-  #file2 = sub_folder/"products.csv"
-  #file3 = sub_folder/"orders.csv"
-  
-  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-  file_data_1 = f"customers_{ts}.csv"
-  
-  file1 = sub_folder/ file_data_1
-  
-  
-  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-  file_data_2 = f"products_{ts}.csv"
-  
-  file2 = sub_folder/file_data_2
-  
-  
-  ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-  file_data_3 = f"orders_{ts}.csv "
-  
-  file3 = sub_folder/file_data_3
-  
-  
+  endpoint = os.getenv("endpoint_url")
+  access_key_id = os.getenv("access_key_id")
+  secret_access_key = os.getenv("secret_key")
 
-  
-  df = pd.DataFrame(a)
-  df.to_csv(file1,index=False)
-  
-  df2 = pd.DataFrame(b)
-  df2.to_csv(file2,index=False)
-  
-  df3 = pd.DataFrame(c)
-  df3.to_csv(file3,index=False)
-  
-  
+  bucket = "nathan-elt-buck"
+
+    # S3 / R2 client
+  s3 = boto3.client(
+        "s3",
+        endpoint_url=endpoint,
+        aws_access_key_id=access_key_id,
+        aws_secret_access_key=secret_access_key,
+        region_name="auto"
+    )
+
+  datasets = {
+        "customers": customers,
+        "products": products,
+        "orders": orders
+    }
+
+  for name, data in datasets.items():
+
+    if not data:
+      logging.warning(f"{name} dataset is empty")
+      continue
+
+    try:
+            # Convert to DataFrame
+      df = pd.DataFrame(data)
+
+            # Convert DataFrame to CSV string
+      csv_buffer = StringIO()
+      df.to_csv(
+                csv_buffer,
+                index=False
+            )
+
+      now = datetime.utcnow()
+
+            # File path in bucket
+      key = (
+                f"sqlite/csv/"
+                f"{now:%Y/%m/%d/%H}/"
+                f"{name}_data.csv"
+            )
+
+            # Upload CSV
+      s3.put_object(
+                Bucket=bucket,
+                Key=key,
+                Body=csv_buffer.getvalue(),
+                ContentType="text/csv"
+            )
+
+      logging.info(
+                f"{name} CSV staged to Data Lake"
+            )
+
+    except Exception as e:
+      logging.error(
+                f"Failed to upload {name}: {e}"
+            )

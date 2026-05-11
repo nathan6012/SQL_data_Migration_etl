@@ -11,10 +11,6 @@ from datetime import datetime
 
 
 
-
-
-
-
 def validate_products_data(data2,Model):
   """Validate product Data """ 
   

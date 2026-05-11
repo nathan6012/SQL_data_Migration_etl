@@ -4,15 +4,27 @@ from dagster import asset, Definitions
 #import aiosqlite
 # imports
 from fetch_db import fetch_from_database
+
 from validate_customers import validate_customers_data
+
 from validate_products import validate_products_data
+
 from validate_orders import validate_orders_data
+
 from models import CustomerData, ProductData, OrdersData
+
 from save_raw_csv import save_raw_csv
+
 from transform_data import transform_data
+
 from load_to_Db import load_to_postgres
 
+
+
+
 logging.basicConfig(level=logging.INFO)
+
+
 
 
 # ----------------------------
@@ -29,7 +41,7 @@ def raw_data():
 
 
 # ----------------------------
-# 2. SAVE RAW
+# 2. SAVE RAW to cloud 
 # ----------------------------
 @asset
 def saved_raw_data(raw_data):
@@ -92,7 +104,6 @@ def transformed_data(
         "orders": ords_l,
     }
 
-
 # ----------------------------
 # 5. LOAD
 # ----------------------------
@@ -106,7 +117,6 @@ def loaded_data(transformed_data):
         )
     )
     return "loaded"
-
 
 # ----------------------------
 # DEFINITIONS (ENTRY POINT)

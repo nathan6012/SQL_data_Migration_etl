@@ -16,6 +16,10 @@ jobs:
     env: 
       PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      
+      ENDPOINT_URL: ${{ secrets.ENDPOINT_URL }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: $ {{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout repository
@@ -45,12 +49,12 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "Airflow ETL workflow completed successfully!"
+          SLACK_MESSAGE: "Dagster ETL workflow completed successfully ✅"
 
       - name: Slack Notification Failure
         if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "Airflow ETL Workflow Failed."
+          SLACK_MESSAGE: "Dagster ETL Workflow Failed ❌ ,please fix  erorrs"
 

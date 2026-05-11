@@ -3,6 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=white)
 ![Dagster](https://img.shields.io/badge/Dagster-5C6AC4?style=for-the-badge)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Cloudflare R2](https://img.shields.io/badge/Storage-Cloudflare%20R2-F38020?logo=cloudflare&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge)
 ![Pydantic](https://img.shields.io/badge/Pydantic-2D6CDF?style=for-the-badge)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -25,7 +26,7 @@ modeling: Relationship modeling (RBDM)
 🧠 #Business Value
 
 This pipeline solves key enterprise problems:
-📦 Data Migration → Move legacy SQLite data into scalable PostgreSQL
+📦 Data Migration → Move legacy SQLite data into scalable PostgreSQL and R2(S3)
 🧹 Data Cleaning → Remove inconsistencies before loading
 🔍 Data Validation → Ensure schema correctness using Pydantic
 ⚙️ Automation → Fully scheduled and repeatable ETL workflows
@@ -107,7 +108,7 @@ pytest tests/
 🔁 Incremental ETL-ready design
 🧠 Strict data validation (Pydantic)
 🏗️ ORM-based schema control (SQLAlchemy)
-⚡ DAGSTAR orchestration
+⚡ DAGSTAE 
 📦 Modular and scalable architecture
 🧪 Test-driven pipeline reliability
 

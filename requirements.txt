@@ -10,6 +10,7 @@ python-dotenv
 pathlib
 email-validator
 pytest
+boto3
 pytest-asyncio
 fakeredis==1.7.0
 aiosqlite
